@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Get a PR Box</title>
+<style>
+  :root{
+    --ink:#161616;
+    --paper:#fdfaf5;
+    --sp-black:#0c0c0c;
+    --sp-cream:#f1e9da;
+    --sp-gold:#b89b5e;
+    --sp-blush:#e6d9c3;
+    --muted:#75706a;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+
+  body{
+    background: var(--sp-black);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--ink);
+    display:flex;
+    justify-content:center;
+  }
+
+  /* lock to phone width, center on any screen so desktop viewers still see a phone frame */
+  .app{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    background: var(--paper);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* HERO */
+  .hero{
+    padding: 30px 24px 18px;
+    text-align:center;
+  }
+
+  .mark{
+    width:120px; height:120px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    background: var(--sp-black);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .mark::after{
+    content:"";
+    position:absolute;
+    inset:-5px;
+    border-radius:50%;
+    border:2px solid var(--sp-gold);
+  }
+  .mark svg{ width:54px; height:54px; }
+
+  h1.headline{
+    font-family: 'Arial Black', Helvetica, sans-serif;
+    font-weight:900;
+    font-size:36px;
+    line-height:1.08;
+    letter-spacing:-0.5px;
+    margin: 0 0 14px;
+    text-transform:uppercase;
+  }
+  h1.headline .accent{ color: var(--sp-gold); }
+
+  .subhead{
+    font-style:italic;
+    font-size:16px;
+    line-height:1.45;
+    color:#2c2a26;
+    margin:0 auto 22px;
+    max-width:320px;
+  }
+  .subhead b{ font-style:normal; font-weight:800; color: var(--sp-gold); }
+
+  /* SPOTS REMAINING STRIP */
+  .spots{
+    margin: 0 24px 22px;
+    background: var(--sp-black);
+    color:#fff;
+    border-radius:10px;
+    padding:11px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+  }
+  .spots .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:#e6c768;
+    flex-shrink:0;
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(230,199,104,.55); }
+    70%{ box-shadow:0 0 0 6px rgba(230,199,104,0); }
+    100%{ box-shadow:0 0 0 0 rgba(230,199,104,0); }
+  }
+  .spots .label{ flex:1; }
+  .spots .num{ font-weight:800; color: var(--sp-gold); }
+  .spots .barwrap{
+    height:5px; background:#3a3a3a; border-radius:3px; overflow:hidden; margin-top:6px;
+  }
+  .spots .bar{
+    height:100%; width:78%;
+    background: linear-gradient(90deg, var(--sp-gold), var(--sp-blush));
+    border-radius:3px;
+  }
+
+  /* STEPS */
+  .steps{
+    margin: 0 24px 22px;
+    padding:0;
+  }
+  .steps li{
+    list-style:none;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:14px;
+    font-size:15.5px;
+    line-height:1.4;
+  }
+  .steps li b{ font-weight:800; }
+  .stepnum{
+    flex-shrink:0;
+    width:24px; height:24px;
+    border-radius:50%;
+    background: var(--sp-black);
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .steps .fine{
+    font-size:12.5px;
+    color: var(--muted);
+    margin-top:2px;
+    display:block;
+  }
+
+  /* CTA */
+  .cta-wrap{
+    margin: 0 24px 10px;
+  }
+  .cta{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    background: var(--sp-black);
+    color:#fff;
+    font-size:19px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+    border:none;
+    border-radius:12px;
+    padding:17px 0;
+    text-decoration:none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    transition: transform .12s ease;
+  }
+  .cta:active{ transform: scale(0.97); }
+  .cta svg{ width:18px; height:18px; }
+
+  .micro{
+    text-align:center;
+    font-size:11.5px;
+    color: var(--muted);
+    margin: 0 24px 26px;
+  }
+
+  /* TESTIMONIAL TICKER */
+  .ticker-section{
+    background: var(--sp-cream);
+    padding: 20px 0 22px;
+    margin-bottom: 22px;
+  }
+  .ticker-title{
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    text-align:center;
+    color: var(--sp-black);
+    margin: 0 0 12px;
+  }
+  .ticker-mask{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker-track{
+    display:flex;
+    gap:12px;
+    width:max-content;
+    animation: scroll-left 22s linear infinite;
+    padding: 0 12px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation:none; }
+  }
+  @keyframes scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  .tcard{
+    flex-shrink:0;
+    width:240px;
+    background:#fff;
+    border-radius:12px;
+    padding:13px 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+  .tcard .stars{ color: var(--sp-gold); font-size:13px; margin-bottom:5px; letter-spacing:1px;}
+  .tcard p{
+    margin:0 0 8px;
+    font-size:13px;
+    line-height:1.4;
+    color:#2c2a26;
+  }
+  .tcard .who{
+    font-size:11.5px;
+    font-weight:700;
+    color: var(--muted);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .tcard .avatar{
+    width:20px; height:20px;
+    border-radius:50%;
+    background: var(--sp-black);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* FAQ / TRUST */
+  .trust{
+    margin: 0 24px 30px;
+  }
+  .trust h2{
+    font-size:15px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin: 0 0 10px;
+  }
+  .trustrow{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:13.5px;
+    line-height:1.4;
+    margin-bottom:10px;
+    color:#2c2a26;
+  }
+  .trustrow .check{
+    flex-shrink:0;
+    width:18px; height:18px;
+    border-radius:50%;
+    background: var(--sp-black);
+    color:#fff;
+    font-size:10px;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+
+  .bottom-cta{
+    margin: 0 24px 40px;
+  }
+
+  footer{
+    text-align:center;
+    font-size:10.5px;
+    color:#a39d92;
+    padding: 0 24px 30px;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="mark">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 22 L62 46 L88 50 L68 68 L73 94 L50 81 L27 94 L32 68 L12 50 L38 46 Z" stroke="#b89b5e" stroke-width="5" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+
+    <h1 class="headline">TEST A <span class="accent">SEPHORA PR HAUL</span> BOX</h1>
+
+    <p class="subhead">Follow the steps below to claim your <b>$750 Beauty Spree</b> for your next Sephora PR Box!</p>
+  </div>
+
+  <div class="spots">
+    <div class="dot"></div>
+    <div style="flex:1">
+      <div class="label">Spots filling for this batch — <span class="num">22 left</span></div>
+      <div class="barwrap"><div class="bar"></div></div>
+    </div>
+  </div>
+
+  <ul class="steps">
+    <li>
+      <span class="stepnum">1</span>
+      <span><b>Click the "Get Now" button</b> below to start</span>
+    </li>
+    <li>
+      <span class="stepnum">2</span>
+      <span>Answer a few quick beauty preference questions</span>
+    </li>
+    <li>
+      <span class="stepnum">3</span>
+      <span>Fill in your shipping info
+        <span class="fine">Takes under 2 minutes</span>
+      </span>
+    </li>
+    <li>
+      <span class="stepnum">4</span>
+      <span>Complete <b>5–8 deals</b>
+        <span class="fine">Email opt-ins don't count toward this</span>
+      </span>
+    </li>
+    <li>
+      <span class="stepnum">5</span>
+      <span><b>Claim your PR Haul!</b> 🎉</span>
+    </li>
+  </ul>
+
+  <div class="cta-wrap">
+    <a class="cta" href="https://trksy.org/aff_c?offer_id=1300&aff_id=164706">
+      GET NOW
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+  <p class="micro">No purchase necessary. Limited batches released weekly.</p>
+
+  <div class="ticker-section">
+    <p class="ticker-title">Recently claimed</p>
+    <div class="ticker-mask">
+      <div class="ticker-track">
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Did the steps on my lunch break, box showed up a week later. Way more than I expected."</p>
+          <div class="who"><span class="avatar">M</span> Maya R. — verified</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Was skeptical but finished it in like 9 minutes. Already shared with my roommate."</p>
+          <div class="who"><span class="avatar">J</span> Jordan T. — verified</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★☆</div>
+          <p>"Easy steps, clear instructions. Got my confirmation email same day."</p>
+          <div class="who"><span class="avatar">A</span> Aaliyah K. — verified</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Did the steps on my lunch break, box showed up a week later. Way more than I expected."</p>
+          <div class="who"><span class="avatar">M</span> Maya R. — verified</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Was skeptical but finished it in like 9 minutes. Already shared with my roommate."</p>
+          <div class="who"><span class="avatar">J</span> Jordan T. — verified</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★☆</div>
+          <p>"Easy steps, clear instructions. Got my confirmation email same day."</p>
+          <div class="who"><span class="avatar">A</span> Aaliyah K. — verified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <h2>Why this batch</h2>
+    <div class="trustrow"><span class="check">✓</span> New PR boxes get released to a small group each week</div>
+    <div class="trustrow"><span class="check">✓</span> Steps are reviewed before you start, so you know what's involved</div>
+    <div class="trustrow"><span class="check">✓</span> Most people finish in under 10 minutes</div>
+  </div>
+
+  <div class="bottom-cta">
+    <a class="cta" href="https://trksy.org/aff_c?offer_id=1300&aff_id=164706">
+      GET NOW
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <footer>
+    This page is not affiliated with, endorsed by, or sponsored by any specific retailer. Offer availability and rewards vary by completion of listed steps.
+  </footer>
+
+</div>
+</body>
+</html>
